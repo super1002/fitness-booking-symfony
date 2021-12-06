@@ -17,6 +17,10 @@ class AdminUserController extends AdminBaseController
     public function index(EntityManagerInterface $entityManager) {
         $users = $entityManager->getRepository(User::class)->findAll();
         $forRender = parent::renderDefault();
+        $userName = $this->getUser()->getName();
+        $userSurname = $this->getUser()->getSurname();
+        $forRender['username'] = $userName;
+        $forRender['usersurname'] = $userSurname;
         $forRender['title'] = 'Пользователи';
         $forRender['users'] = $users;
         return $this->render('admin/user/index.html.twig', $forRender);
@@ -45,6 +49,10 @@ class AdminUserController extends AdminBaseController
         }
 
         $forRender = parent::renderDefault();
+        $userName = $this->getUser()->getName();
+        $userSurname = $this->getUser()->getSurname();
+        $forRender['username'] = $userName;
+        $forRender['usersurname'] = $userSurname;
         $forRender['title'] = 'Форма регистрации пользователя';
         $forRender['form'] = $form->createView();
         return $this->render('admin/user/form.html.twig', $forRender);

@@ -1,6 +1,6 @@
 {% extends 'admin/adminbase.html.twig' %}
 {% block  body %}
-<div class="container-fluid">
+<div class="container">
     <div class="row no-gutters">
         <div class="col-12">
             <h1 class="display-4 text-center mt-5">{{ title }}</h1>
@@ -12,14 +12,30 @@
             </div>
         </div>
     <div class="row no-gutters mt-3">
-        <div class="col-12">
-            <h2>Список пользователей</h2>
-            <ul>
-                {% for user in users %}
-                    <li>{{ user.email }} | {{ user.roles|json_encode }}</li>
-                {% endfor %}
-            </ul>
-        </div>
+        <table class="table">
+           <thead class="thead-dark">
+                <tr>
+                    <th scope="col">№</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Телефон</th>
+                    <th scope="col">Роль</th>
+                </tr>
+           </thead>
+           <tbody>
+           {% for user in users %}
+               <tr>
+                   <td><b>{{ loop.index }}</b></td>
+                   <td>{{ user.name }}</td>
+                   <td>{{ user.surname }}</td>
+                   <td>{{ user.email }}</td>
+                   <td>{{ user.phone }}</td>
+                   <td>{{ user.roles|json_encode }}</td>
+               </tr>
+           {% endfor %}
+           </tbody>
+        </table>
     </div>
 </div>
 

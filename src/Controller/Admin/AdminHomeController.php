@@ -11,6 +11,11 @@ class AdminHomeController extends AdminBaseController
      */
     public function index() {
         $forRender = parent::renderDefault();
+        $userName = $this->getUser()->getName();
+        $userSurname = $this->getUser()->getSurname();
+        $forRender['username'] = $userName;
+        $forRender['usersurname'] = $userSurname;
+
         return $this->render('admin/index.html.twig', $forRender);
     }
 }

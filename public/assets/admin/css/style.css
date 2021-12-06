@@ -1,0 +1,12 @@
+.form-signin {
+    width: 80%;
+    padding: 30px;
+    border-radius: 6px;
+    margin-top: 10%;
+    border: 1px #f5f5f5 solid;
+}
+
+#username {
+    color: whitesmoke;
+    margin-right: 10px;
+}
