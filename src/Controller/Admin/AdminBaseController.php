@@ -8,7 +8,7 @@ class AdminBaseController extends AbstractController
 {
     public function renderDefault() {
         return [
-            'title' => 'Система учета клиентов фитнесс-центра админ панель'
+            'title' => 'Админ панель'
         ];
     }
 }

@@ -2,10 +2,13 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Home page{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('assets/framework/bootstrap-4.6.1/css/bootstrap.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/framework/fontawesome-5.15.4/css/all.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/main/css/style.css') }}">
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
@@ -14,6 +17,36 @@
         {% endblock %}
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="{{ path('home') }}">
+                <i class="fa fa-microchip" aria-hidden="true"></i>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('home') }}">Главная <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+                <form class="form-inline">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a class="btn btn-outline-success my-5 my-sm-0" href="{{ path('admin_home') }}">Админ панель</a>
+                    {% else %}
+                        <a href="{{ path('admin_home') }}" class="btn btn-outline-success my-5 my-sm-0">Вход</a>
+                    {% endif %}
+                </form>
+            </div>
+        </nav>
         {% block body %}{% endblock %}
+        <script
+                src="https://code.jquery.com/jquery-3.6.0.min.js"
+                integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha512-5WvZa4N7Jq3TVNCp4rjcBMlc6pT3lZ7gVxjtI6IkKW+uItSa+rFgtFljvZnCxQGj8SUX5DHraKE6Mn/4smK1Cg=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="{{ asset('assets/framework/bootstrap-4.6.1/js/bootstrap.min.js') }}"></script>
     </body>
 </html>
