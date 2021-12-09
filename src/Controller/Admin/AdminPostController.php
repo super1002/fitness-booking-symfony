@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Category;
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Service\FileManagerServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,12 +28,17 @@ class AdminPostController extends AdminBaseController
     /**
      * @Route("/admin/post/create", name="admin_post_create")
      */
-    public function create(Request $request, EntityManagerInterface $entityManager) {
+    public function create(Request $request, EntityManagerInterface $entityManager, FileManagerServiceInterface $fileManagerService) {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('image')->getData();
+            if ($image) {
+                $fileName = $fileManagerService->imagePostUpload($image);
+                $post->setImage($fileName);
+            }
             $post->setCreateAtValue();
             $post->setUpdateAtValue();
             $post->setIsPublished();
@@ -51,17 +57,30 @@ class AdminPostController extends AdminBaseController
     /**
      * @Route("/admin/post/update/{id}", name="admin_post_update")
      */
-    public function update(int $id, Request $request, EntityManagerInterface $entityManager) {
+    public function update(int $id, Request $request, EntityManagerInterface $entityManager, FileManagerServiceInterface  $fileManagerService) {
         $post = $entityManager->getRepository(Post::class)->find($id);
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('save')->isClicked()) {
+                $image = $form->get('image')->getData();
+                $imageOld = $post->getImage();
+                if ($image) {
+                    if ($imageOld) {
+                        $fileManagerService->imagePostRemove($imageOld);
+                    }
+                    $fileName = $fileManagerService->imagePostUpload($image);
+                    $post->setImage($fileName);
+                }
                 $post->setUpdateAtValue();
                 $this->addFlash('success', 'Пост обновлён');
             }
             if ($form->get('delete')->isClicked()) {
+                $image = $post->getImage();
+                if ($image) {
+                    $fileManagerService->imagePostRemove($image);
+                }
                 $entityManager->remove($post);
                 $this->addFlash('success', 'Пост удален');
             }
