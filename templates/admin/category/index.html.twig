@@ -1,0 +1,53 @@
+{% extends 'admin/adminbase.html.twig' %}
+{% block  body %}
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-12">
+                <h1 class="display-4 text-center mt-5">{{ title }}</h1>
+            </div>
+        </div>
+        <div class="row no-gutters">
+            <div class="col-12">
+                <a class="btn btn-success mt-5" href="{{ path('admin_category_create') }}">Добавить категорию</a>
+            </div>
+        </div>
+        <div class="row no-gutters justify-content-center">
+            <div class="col-12 col-lg-6 col-md-6 mt-3">
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row no-gutters mt-3">
+            <div class="col-12"  col-lg-6 col-md-6>
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">№</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Описание</th>
+                        <th scope="col">Действия</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for category in categories %}
+                        <tr>
+                            <td><b>{{ loop.index }}</b></td>
+                            <td>{{ category.title }}</td>
+                            <td>{{ category.description }}</td>
+                            <td><a href="{{ path('admin_category_update', {'id': category.id}) }}" class="btn btn-info">Редактировать</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

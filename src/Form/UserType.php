@@ -40,8 +40,17 @@ class UserType extends AbstractType
                     ]
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Создать пользователя'
-            ]);
+                'label' => 'Сохранить пользователя',
+                'attr' => [
+                    'class' => 'btn-success float-left mr-2'
+                ]
+            ])
+            ->add('delete', SubmitType::class, [
+                'label' => 'Удалить пользователя',
+                'attr' => [
+                    'class' => 'btn-danger'
+                ]
+            ]);;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

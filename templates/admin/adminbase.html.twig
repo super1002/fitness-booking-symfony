@@ -40,10 +40,16 @@
                     <a class="nav-link" href="{{ path('admin_users') }}">Типы занятий <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('admin_category') }}">Категории постов <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('admin_post') }}">Посты <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
                     <a class="nav-link" target="_blank" href="{{ path('home') }}">Вернуться на сайт <span class="sr-only">(current)</span></a>
                 </li>
             </ul>
-            <span id="username">{{ username }} {{ usersurname }}</span>
+          {#  <span id="username">{{ render(controller('current_user')) }}</span> #}
             <form class="form-inline">
                 <a href="{{ path('app_logout') }}" class="btn btn-outline-info my-5 my-sm-0">Выход</a>
             </form>
